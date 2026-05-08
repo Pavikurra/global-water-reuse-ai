@@ -1,0 +1,11 @@
+method,category,typical_scale,energy_level,cost_level,reuse_quality
+Sedimentation,Physical,Building/City,Low,Low,Low
+Sand Filtration,Physical,Building/City,Low,Low,Medium
+Chlorination,Chemical,Building/City,Low,Low,Medium
+UV Disinfection,Chemical,Building/City,Medium,Medium,High
+SBR,Biological,Building/City,Medium,Medium,High
+MBR,Biological,Building/City,High,High,Very High
+UASB,Biological,City,Low,Medium,Medium
+Constructed Wetlands,Nature-Based,Community,Low,Medium,Medium
+MBBR,Biological,Building/City,Medium,Medium,High
+Ultrafiltration,Physical,Building/City,Medium,High,High
