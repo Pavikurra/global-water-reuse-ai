@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+import plotly.express as px
 
 st.set_page_config(
     page_title="Global Water Reuse AI",
@@ -44,6 +45,33 @@ if uploaded_file is not None:
         f"{df['untapped_reuse_m3_year'].sum():,.0f}"
     )
 
+st.subheader("Global Greywater Production Map")
+
+fig_map = px.choropleth(
+    df,
+    locations="iso3",
+    color="greywater_tons_per_hour",
+    hover_name="country",
+    color_continuous_scale="Blues",
+    title="Estimated Greywater Tons Per Hour by Country"
+)
+
+st.plotly_chart(fig_map, use_container_width=True)
+
+st.subheader("Predicted Reuse Effectiveness Map")
+
+fig_class = px.choropleth(
+    df,
+    locations="iso3",
+    color="predicted_reuse_class",
+    hover_name="country",
+    title="Predicted Greywater Reuse Effectiveness by Country"
+)
+
+st.plotly_chart(fig_class, use_container_width=True)
+
+
+    
     st.subheader("Top Countries by Greywater Tons/Hour")
 
     top_greywater = df.sort_values(
