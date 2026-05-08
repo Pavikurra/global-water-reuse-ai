@@ -1,25 +1,27 @@
 # Global Water Reuse AI
 
-An open-data and machine learning platform for estimating global greywater production, wastewater reuse potential, and sustainable water infrastructure readiness across countries.
+Open-data and machine learning platform for estimating global greywater production, water reuse potential, water stress risk, and infrastructure readiness across countries.
 
-## Project Goal
+## Project Overview
 
-This project uses public datasets and machine learning to estimate how much greywater may be generated globally and which countries have high potential for water reuse systems.
+This project combines public datasets, engineered estimates, machine learning, and dashboard visualization to study global water reuse infrastructure.
 
-## Features
+## Key Features
 
-- Global country-level water data collection
-- Population and urbanization data processing
-- Greywater production estimation
+- Global greywater production estimation
 - Greywater tons/hour calculation
-- Reuse potential scoring
-- Country comparison
-- Plumbing and treatment method documentation
-- Future ML classification dashboard
+- Reuse effectiveness analytics
+- Machine learning reuse classification
+- Water stress intelligence
+- Infrastructure intelligence score
+- Treatment method recommendations
+- Plumbing style reference dataset
+- Interactive Streamlit dashboard
+- Research documentation
 
 ## Tech Stack
 
-Python, Pandas, NumPy, Requests, scikit-learn, Streamlit, Plotly, Jupyter Notebook
+Python, Pandas, NumPy, scikit-learn, Matplotlib, Plotly, Streamlit, Jupyter Notebook
 
 ## Project Structure
 
