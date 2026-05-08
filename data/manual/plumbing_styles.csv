@@ -1,0 +1,11 @@
+country,plumbing_style,reuse_adoption_notes,common_reuse_methods,confidence
+Singapore,Dual plumbing and centralized reuse,Advanced national water reuse system with strong reclaimed water adoption,Membrane treatment; UV disinfection; advanced reuse,High
+Israel,Centralized reuse with agricultural reuse,One of the global leaders in wastewater reuse for agriculture,Secondary treatment; tertiary treatment; filtration,High
+Australia,Mixed centralized and building-scale reuse,Strong reuse adoption in water-stressed regions,Dual plumbing; wetlands; filtration; disinfection,Medium
+United States,Mixed centralized and decentralized reuse,Reuse adoption varies by state and city,Reclaimed water networks; MBR; disinfection,Medium
+United Arab Emirates,Centralized reuse and landscape irrigation,High reuse need due to arid climate,Tertiary treatment; filtration; chlorination,Medium
+Japan,Building-scale and urban reuse systems,Urban reuse systems used in dense cities,Building greywater reuse; membrane systems,Medium
+India,Mixed and developing reuse infrastructure,Large reuse potential but uneven treatment coverage,UASB; wetlands; decentralized systems,Medium
+Netherlands,Advanced centralized water infrastructure,Strong water management and circular water innovation,Advanced treatment; decentralized pilots,Medium
+China,Large-scale centralized treatment and reuse,Major urban wastewater reuse expansion,MBR; SBR; reclaimed water systems,Medium
+Germany,Centralized wastewater treatment with reuse pilots,Strong treatment infrastructure but reuse varies regionally,Advanced biological treatment; filtration,Medium
