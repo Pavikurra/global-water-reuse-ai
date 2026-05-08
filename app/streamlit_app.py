@@ -3,10 +3,27 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import plotly.express as px
 
-st.set_page_config(
-    page_title="Global Water Reuse AI",
-    layout="wide"
-)
+
+def recommend_treatment_methods(row):
+    greywater = row.get("greywater_tons_per_hour", 0)
+    reuse_class = row.get("predicted_reuse_class", "Medium")
+
+    recommendations = []
+
+    if greywater > 1_000_000:
+        recommendations.extend(["MBR", "SBR", "MBBR", "Tertiary Filtration", "UV Disinfection"])
+    elif greywater > 100_000:
+        recommendations.extend(["SBR", "MBBR", "Sand Filtration", "Chlorination"])
+    else:
+        recommendations.extend(["Constructed Wetlands", "Sand Filtration", "UV Disinfection", "Decentralized Greywater Reuse"])
+
+    if reuse_class in ["Low", "Moderate"]:
+        recommendations.append("Policy + Dual Plumbing Upgrade")
+
+    return ", ".join(recommendations)
+
+
+st.set_page_config(page_title="Global Water Reuse AI", layout="wide")
 
 st.title("Global Water Reuse AI")
 
@@ -15,13 +32,15 @@ st.write(
     "production, reuse effectiveness, and water reuse opportunity by country."
 )
 
-uploaded_file = st.file_uploader(
-    "Upload global_ml_predictions.csv",
-    type=["csv"]
-)
+uploaded_file = st.file_uploader("Upload global_ml_predictions.csv", type=["csv"])
 
 if uploaded_file is not None:
     df = pd.read_csv(uploaded_file)
+
+    df["recommended_methods"] = df.apply(
+        recommend_treatment_methods,
+        axis=1
+    )
 
     st.subheader("Dataset Preview")
     st.dataframe(df.head())
@@ -30,10 +49,7 @@ if uploaded_file is not None:
 
     col1, col2, col3 = st.columns(3)
 
-    col1.metric(
-        "Total Countries/Regions",
-        len(df)
-    )
+    col1.metric("Total Countries/Regions", len(df))
 
     col2.metric(
         "Total Estimated Greywater Tons/Hour",
@@ -45,55 +61,45 @@ if uploaded_file is not None:
         f"{df['untapped_reuse_m3_year'].sum():,.0f}"
     )
 
-st.subheader("Global Greywater Production Map")
+    st.subheader("Global Greywater Production Map")
 
-fig_map = px.choropleth(
-    df,
-    locations="iso3",
-    color="greywater_tons_per_hour",
-    hover_name="country",
-    color_continuous_scale="Blues",
-    title="Estimated Greywater Tons Per Hour by Country"
-)
-
-st.plotly_chart(fig_map, use_container_width=True)
-
-st.subheader("Predicted Reuse Effectiveness Map")
-
-fig_class = px.choropleth(
-    df,
-    locations="iso3",
-    color="predicted_reuse_class",
-    hover_name="country",
-    title="Predicted Greywater Reuse Effectiveness by Country"
-)
-
-st.plotly_chart(fig_class, use_container_width=True)
-
-st.subheader("Plumbing and Reuse Style Reference")
-
-plumbing_file = st.file_uploader(
-    "Upload plumbing_styles.csv",
-    type=["csv"],
-    key="plumbing"
-)
-
-if plumbing_file is not None:
-
-    plumbing_df = pd.read_csv(
-        plumbing_file
+    fig_map = px.choropleth(
+        df,
+        locations="iso3",
+        color="greywater_tons_per_hour",
+        hover_name="country",
+        color_continuous_scale="Blues",
+        title="Estimated Greywater Tons Per Hour by Country"
     )
 
-    st.dataframe(
-        plumbing_df
+    st.plotly_chart(fig_map, use_container_width=True)
+
+    st.subheader("Predicted Reuse Effectiveness Map")
+
+    fig_class = px.choropleth(
+        df,
+        locations="iso3",
+        color="predicted_reuse_class",
+        hover_name="country",
+        title="Predicted Greywater Reuse Effectiveness by Country"
     )
 
-else:
+    st.plotly_chart(fig_class, use_container_width=True)
 
-    st.info(
-        "Upload plumbing_styles.csv to view country plumbing and reuse style notes."
+    st.subheader("Plumbing and Reuse Style Reference")
+
+    plumbing_file = st.file_uploader(
+        "Upload plumbing_styles.csv",
+        type=["csv"],
+        key="plumbing"
     )
-    
+
+    if plumbing_file is not None:
+        plumbing_df = pd.read_csv(plumbing_file)
+        st.dataframe(plumbing_df)
+    else:
+        st.info("Upload plumbing_styles.csv to view country plumbing and reuse style notes.")
+
     st.subheader("Top Countries by Greywater Tons/Hour")
 
     top_greywater = df.sort_values(
@@ -144,6 +150,19 @@ else:
         ]
     )
 
+    st.subheader("Treatment Method Recommendations")
+
+    st.dataframe(
+        df[
+            [
+                "country",
+                "greywater_tons_per_hour",
+                "predicted_reuse_class",
+                "recommended_methods"
+            ]
+        ].head(25)
+    )
+
     st.subheader("Filter by Predicted Reuse Class")
 
     selected_class = st.selectbox(
@@ -168,6 +187,4 @@ else:
     )
 
 else:
-    st.info(
-        "Upload the global_ml_predictions.csv file generated from the ML notebook."
-    )
+    st.info("Upload the global_ml_predictions.csv file generated from the ML notebook.")
