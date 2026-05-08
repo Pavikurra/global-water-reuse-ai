@@ -70,7 +70,29 @@ fig_class = px.choropleth(
 
 st.plotly_chart(fig_class, use_container_width=True)
 
+st.subheader("Plumbing and Reuse Style Reference")
 
+plumbing_file = st.file_uploader(
+    "Upload plumbing_styles.csv",
+    type=["csv"],
+    key="plumbing"
+)
+
+if plumbing_file is not None:
+
+    plumbing_df = pd.read_csv(
+        plumbing_file
+    )
+
+    st.dataframe(
+        plumbing_df
+    )
+
+else:
+
+    st.info(
+        "Upload plumbing_styles.csv to view country plumbing and reuse style notes."
+    )
     
     st.subheader("Top Countries by Greywater Tons/Hour")
 
